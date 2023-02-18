@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/meal_category"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.3"/>
+
+    <TextView
+        android:id="@+id/meal_name"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.2"/>
+
+    <TextView
+        android:id="@+id/meal_allergenics"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.4"
+        android:textSize="10dp"
+        android:layout_marginTop="-5dp"
+        android:layout_marginLeft="3dp"/>
+
+</LinearLayout>
