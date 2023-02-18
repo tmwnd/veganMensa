@@ -7,13 +7,13 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 
-class MealListAdapter(val context: Context, val list: ArrayList<Meal>) : BaseAdapter() {
+class MealListAdapter(val context: Context, val meals: ArrayList<Meal>) : BaseAdapter() {
     override fun getCount(): Int {
-        return list.size
+        return meals.size
     }
 
     override fun getItem(i: Int): Any {
-        return list[i]
+        return meals[i]
     }
 
     override fun getItemId(i: Int): Long {
@@ -22,7 +22,7 @@ class MealListAdapter(val context: Context, val list: ArrayList<Meal>) : BaseAda
 
     override fun getView(i: Int, convertView: View?, parent: ViewGroup?): View {
         val view: View = LayoutInflater.from(context).inflate(R.layout.meal, parent, false)
-        val meal = list[i]
+        val meal = getItem(i) as Meal
 
         view.findViewById<TextView>(R.id.meal_category).text = meal.category
         view.findViewById<TextView>(R.id.meal_name).text = meal.name

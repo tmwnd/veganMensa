@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val url = "https://openmensa.org/api/v2/canteens/187/days/%222023-02-21%22/meals"
+        val url = "https://openmensa.org/api/v2/canteens/187/meals"
 
         AsyncTaskHandleJson().execute(url)
     }
@@ -42,47 +42,62 @@ class MainActivity : AppCompatActivity() {
     private fun handleJson(jsonString: String?) {
         val jsonArray = JSONArray(jsonString)
 
-        val meals = ArrayList<Meal>()
-        val sideDishes = ArrayList<Meal>()
+        val days = ArrayList<Day>()
 
         for (i in 0 until jsonArray.length()) {
-            val jsonObject = jsonArray.getJSONObject(i)
+            val dayJsonObject = jsonArray.getJSONObject(i)
 
-            val allergenics = ArrayList<String>()
-            val notes = jsonObject.getJSONArray("notes")
-            for (j in 0 until notes.length())
-                allergenics.add(notes.getString(j))
+            val meals = ArrayList<Meal>()
+            val sideDishes = ArrayList<Meal>()
 
-            if (jsonObject.getString("category").contains("beilage")){
-                sideDishes.add(
+            val mealJsonArray = dayJsonObject.getJSONArray("meals")
+
+            for (j in 0 until mealJsonArray.length()) {
+                val mealJsonObject = mealJsonArray.getJSONObject(j)
+
+                val allergenics = ArrayList<String>()
+                val notes = mealJsonObject.getJSONArray("notes")
+                for (k in 0 until notes.length())
+                    allergenics.add(notes.getString(k))
+
+                if (mealJsonObject.getString("category").contains("beilage")) {
+                    sideDishes.add(
+                        Meal(
+                            -1,
+                            mealJsonObject.getString("name"),
+                            mealJsonObject.getString("category"),
+                            0.0,
+                            allergenics
+                        )
+                    )
+                }
+
+                if (!allergenics.contains("vegan"))
+                    continue
+
+                if (mealJsonObject.getJSONObject("prices").getString("students") == "null")
+                    continue
+
+                meals.add(
                     Meal(
-                        -1,
-                        jsonObject.getString("name"),
-                        jsonObject.getString("category"),
-                        0.0,
+                        mealJsonObject.getInt("id"),
+                        mealJsonObject.getString("name"),
+                        mealJsonObject.getString("category"),
+                        mealJsonObject.getJSONObject("prices").getDouble("students"),
                         allergenics
                     )
                 )
             }
 
-            if (!allergenics.contains("vegan"))
-                continue
-
-            if (jsonObject.getJSONObject("prices").getString("students") == "null")
-                continue
-
-            meals.add(
-                Meal(
-                    jsonObject.getInt("id"),
-                    jsonObject.getString("name"),
-                    jsonObject.getString("category"),
-                    jsonObject.getJSONObject("prices").getDouble("students"),
-                    allergenics
+            days.add(
+                Day(
+                    dayJsonObject.getString("date"),
+                    meals,
+                    sideDishes
                 )
             )
         }
 
-        findViewById<ListView>(R.id.meal_list).adapter = MealListAdapter(this, meals)
-        findViewById<ListView>(R.id.side_dish_list).adapter = SideDishListAdapter(this, sideDishes)
+        findViewById<ListView>(R.id.day_list).adapter = DayListAdapter(this, days)
     }
 }
