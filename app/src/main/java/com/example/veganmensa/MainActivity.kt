@@ -89,6 +89,9 @@ class MainActivity : AppCompatActivity() {
                 )
             }
 
+            if (meals.size == 0)
+                continue
+
             days.add(
                 Day(
                     dayJsonObject.getString("date"),
