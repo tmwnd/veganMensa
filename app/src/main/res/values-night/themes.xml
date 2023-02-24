@@ -9,8 +9,16 @@
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_200</item>
         <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Theme.RWTH" parent="Theme.VeganMensa">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/rwth_blue_2</item>
+        <item name="colorPrimaryVariant">@color/rwth_blue_4</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/rwth_blue_4</item>
+        <item name="colorSecondaryVariant">@color/rwth_blue_2</item>
         <!-- Customize your theme here. -->
     </style>
 </resources>

@@ -13,12 +13,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val url = "https://openmensa.org/api/v2/canteens/187/meals"
-
-        AsyncTaskHandleJson().execute(url)
+        val URL = "https://openmensa.org/api/v2/canteens/" + getString(R.string.mensa_id) + "/meals"
+        AsyncTaskImportMeals().execute(URL)
     }
 
-    inner class AsyncTaskHandleJson : AsyncTask<String, String, String>() {
+    inner class AsyncTaskImportMeals : AsyncTask<String, String, String>() {
         override fun doInBackground(vararg url: String?): String {
             var text: String
             var connection = URL(url[0]).openConnection() as HttpURLConnection
