@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.TextView
 import androidx.core.view.children
+import com.google.android.material.color.MaterialColors
 
 class MealListAdapter(private val context: Context, private val meals: ArrayList<Meal>) :
     BaseAdapter() {
@@ -38,7 +39,8 @@ class MealListAdapter(private val context: Context, private val meals: ArrayList
         view.findViewById<CheckBox>(R.id.fav).setOnCheckedChangeListener { it, isChecked ->
             meal.isFav = isChecked
 
-            if (!isChecked) view.visibility = (parent as ListView).findViewById<LinearLayout>(R.id.side_dish_list).visibility
+            if (!isChecked) view.visibility =
+                (parent as ListView).findViewById<LinearLayout>(R.id.side_dish_list).visibility
         }
 
 
@@ -50,6 +52,12 @@ class MealListAdapter(private val context: Context, private val meals: ArrayList
         }
 
         view.findViewById<TextView>(R.id.meal_allergenics).text = allergenics
+        view.setBackgroundColor(
+            MaterialColors.getColor(
+                view,
+                if (i % 2 == 0) R.attr.colorEvenMeal else R.attr.colorOddMeal
+            )
+        )
 
         return view
     }

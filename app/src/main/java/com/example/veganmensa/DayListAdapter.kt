@@ -32,13 +32,12 @@ class DayListAdapter(private val context: Context, private val days: ArrayList<D
 
         view.findViewById<TextView>(R.id.date).text = day.toString()
 
-        if (day.isToday())
-            (view.findViewById<TextView>(R.id.date).parent as LinearLayout).setBackgroundColor(
-                MaterialColors.getColor(
-                    view,
-                    com.google.android.material.R.attr.colorPrimaryVariant
-                )
+        (view.findViewById<TextView>(R.id.date).parent as LinearLayout).setBackgroundColor(
+            MaterialColors.getColor(
+                view,
+                if (day.isToday()) R.attr.colorToday else R.attr.colorDay
             )
+        )
 
         var mealListAdapter = MealListAdapter(context, day.meals)
         for (i in 0 until mealListAdapter.count)
@@ -51,7 +50,8 @@ class DayListAdapter(private val context: Context, private val days: ArrayList<D
 
         (view.findViewById<TextView>(R.id.date).parent as LinearLayout).setOnClickListener {
             val meals = (it.parent as LinearLayout).findViewById<LinearLayout>(R.id.meal_list)
-            val sideDishes = (it.parent as LinearLayout).findViewById<LinearLayout>(R.id.side_dish_list)
+            val sideDishes =
+                (it.parent as LinearLayout).findViewById<LinearLayout>(R.id.side_dish_list)
 
             when (sideDishes.visibility) {
                 View.GONE -> {
@@ -72,7 +72,12 @@ class DayListAdapter(private val context: Context, private val days: ArrayList<D
             }
         }
 
-        if (day.isVisible) (view.findViewById<TextView>(R.id.date).parent as LinearLayout).performClick()
+        if (day.isVisible) {
+            view.findViewById<LinearLayout>(R.id.meal_list).children.forEach { meal ->
+                meal.visibility = View.VISIBLE
+            }
+            view.findViewById<LinearLayout>(R.id.side_dish_list).visibility = View.VISIBLE
+        }
 
         return view
     }

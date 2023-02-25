@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import com.google.android.material.color.MaterialColors
 
-class SideDishListAdapter(private val context: Context, private val sideDishes: ArrayList<Meal>) : BaseAdapter() {
+class SideDishListAdapter(private val context: Context, private val sideDishes: ArrayList<Meal>) :
+    BaseAdapter() {
     override fun getCount(): Int {
         return sideDishes.size
     }
@@ -36,6 +38,7 @@ class SideDishListAdapter(private val context: Context, private val sideDishes: 
         }
 
         view.findViewById<TextView>(R.id.meal_allergenics).text = allergenics
+        view.setBackgroundColor(MaterialColors.getColor(view, R.attr.colorSideDish))
 
         return view
     }

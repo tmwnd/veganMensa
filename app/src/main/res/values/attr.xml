@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="colorDay" format="reference" />
+    <attr name="colorToday" format="reference" />
+    <attr name="colorEvenMeal" format="reference" />
+    <attr name="colorOddMeal" format="reference" />
+    <attr name="colorSideDish" format="reference" />
+</resources>

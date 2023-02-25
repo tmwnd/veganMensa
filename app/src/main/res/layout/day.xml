@@ -18,7 +18,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.15"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:textStyle="bold|italic"/>
 
         <Button
             android:layout_width="fill_parent"

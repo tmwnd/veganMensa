@@ -20,5 +20,10 @@
         <item name="colorSecondary">@color/rwth_blue_4</item>
         <item name="colorSecondaryVariant">@color/rwth_blue_2</item>
         <!-- Customize your theme here. -->
+        <item name="colorDay">@color/white</item>
+        <item name="colorToday">@color/rwth_blue_2</item>
+        <item name="colorEvenMeal">@color/rwth_light_gray</item>
+        <item name="colorOddMeal">@color/white</item>
+        <item name="colorSideDish">@color/rwth_light_gray</item>
     </style>
 </resources>
