@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 
-class SideDishListAdapter(val context: Context, val sideDishes: ArrayList<Meal>) : BaseAdapter() {
+class SideDishListAdapter(private val context: Context, private val sideDishes: ArrayList<Meal>) : BaseAdapter() {
     override fun getCount(): Int {
         return sideDishes.size
     }
@@ -30,8 +30,8 @@ class SideDishListAdapter(val context: Context, val sideDishes: ArrayList<Meal>)
         var allergenics = ""
         var div = ""
         for (allergenic in meal.allergenics) {
-            if (allergenicMap.keys.contains(allergenic))
-                allergenics += div + allergenicMap[allergenic]
+            if (Meal.allergenicMap.keys.contains(allergenic))
+                allergenics += div + Meal.allergenicMap[allergenic]
             div = ", "
         }
 

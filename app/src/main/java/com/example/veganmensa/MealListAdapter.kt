@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.CheckBox
 import android.widget.LinearLayout
+import android.widget.ListView
 import android.widget.TextView
 import androidx.core.view.children
 
-class MealListAdapter(val context: Context, val meals: ArrayList<Meal>) : BaseAdapter() {
+class MealListAdapter(private val context: Context, private val meals: ArrayList<Meal>) :
+    BaseAdapter() {
     override fun getCount(): Int {
         return meals.size
     }
@@ -27,35 +29,23 @@ class MealListAdapter(val context: Context, val meals: ArrayList<Meal>) : BaseAd
         val view: View = LayoutInflater.from(context).inflate(R.layout.meal, parent, false)
         val meal = getItem(i) as Meal
 
+        view.visibility = if (meal.isFav) View.VISIBLE else View.GONE
         view.findViewById<TextView>(R.id.meal_category).text = meal.category
         view.findViewById<TextView>(R.id.meal_name).text = meal.name
         view.findViewById<TextView>(R.id.meal_price).text = meal.price.toString() + "0€"
+        view.findViewById<CheckBox>(R.id.fav).isChecked = meal.isFav
 
         view.findViewById<CheckBox>(R.id.fav).setOnCheckedChangeListener { it, isChecked ->
-            val day = it.parent.parent.parent.parent as LinearLayout
-            val favs = day.findViewById<LinearLayout>(R.id.fav_list)
+            meal.isFav = isChecked
 
-            if (isChecked) {
-                val favMeal = getView(i, convertView, parent)
-                val fav = favMeal.findViewById<CheckBox>(R.id.fav)
-
-                fav.isEnabled = false
-                fav.setOnCheckedChangeListener(null)
-                fav.isChecked = true
-
-                favs.addView(favMeal)
-            } else {
-                for (fav in favs.children)
-                    if (fav.findViewById<TextView>(R.id.meal_name).text == meal.name)
-                        favs.removeView(fav)
-            }
+            if (!isChecked) view.visibility = (parent as ListView).findViewById<LinearLayout>(R.id.side_dish_list).visibility
         }
+
 
         var allergenics = ""
         var div = ""
-        for (allergenic in meal.allergenics) {
-            if (allergenicMap.keys.contains(allergenic))
-                allergenics += div + allergenicMap[allergenic]
+        meal.allergenics.forEach { allergenic ->
+            if (Meal.allergenicMap.keys.contains(allergenic)) allergenics += div + Meal.allergenicMap[allergenic]
             div = ", "
         }
 

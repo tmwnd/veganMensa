@@ -33,17 +33,10 @@
         android:background="@android:color/darker_gray" />
 
     <LinearLayout
-        android:id="@+id/fav_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" />
-
-    <LinearLayout
         android:id="@+id/meal_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="gone" />
+        android:orientation="vertical"/>
 
     <View
         android:layout_width="match_parent"
