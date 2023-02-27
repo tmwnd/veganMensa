@@ -37,12 +37,11 @@ class MealListAdapter(private val context: Context, private val meals: ArrayList
         view.findViewById<CheckBox>(R.id.fav).isChecked = meal.isFav
 
         view.findViewById<CheckBox>(R.id.fav).setOnCheckedChangeListener { it, isChecked ->
-            meal.isFav = isChecked
-
-            if (!isChecked) view.visibility =
-                (parent as ListView).findViewById<LinearLayout>(R.id.side_dish_list).visibility
+            when (isChecked) {
+                true -> meal.isFav = false
+                false -> meal.isFav = false
+            }
         }
-
 
         var allergenics = ""
         var div = ""
